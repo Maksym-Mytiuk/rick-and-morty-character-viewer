@@ -1,5 +1,5 @@
-import ReactPaginate from "react-paginate";
-import { PaginationWrapper } from "./Pagination.styled";
+import ReactPaginate from 'react-paginate';
+import { PaginationWrapper } from './Pagination.styled';
 
 type Props = {
   pageCount: number;

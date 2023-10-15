@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const LogoWrapper = styled.div`
   width: 100%;
@@ -6,7 +6,9 @@ export const LogoWrapper = styled.div`
   margin: 10px auto 24px;
 `;
 
-export const PageContainer = styled.div`
+export const PageContainer = styled.div``;
+
+export const CharactersWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   max-width: 960px;

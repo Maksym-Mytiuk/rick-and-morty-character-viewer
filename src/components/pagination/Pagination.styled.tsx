@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const PaginationWrapper = styled.div`
   margin: 40px 0;
@@ -33,6 +33,11 @@ export const PaginationWrapper = styled.div`
       &.disabled {
         opacity: 0.4;
         cursor: not-allowed;
+      }
+
+      &.break {
+        border-color: transparent;
+        pointer-events: none;
       }
     }
 

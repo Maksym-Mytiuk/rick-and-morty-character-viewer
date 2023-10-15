@@ -1,17 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import { CharacterDTO } from "@/interfaces/character";
+import { Character as ICharacter, CharacterDTO } from '@/interfaces/character';
 
-import Character from "@/components/character/Character";
-import Pagination from "@/components/pagination/Pagination";
-import { PageContainer, LogoWrapper } from "./Characters.styled";
-import logo from "@/assets/images/logo.png";
+import Character from '@/components/character/Character';
+import Pagination from '@/components/pagination/Pagination';
+import { CharactersWrapper, PageContainer, LogoWrapper } from './Characters.styled';
+import logo from '@/assets/images/logo.png';
+import CharacterModal from '@/components/character/CharacterModal';
 
-const url = "https://rickandmortyapi.com/api/character";
+const url = 'https://rickandmortyapi.com/api/character';
 
 export default function Characters() {
   const [activePageNumber, setActivePageNumber] = useState(1);
   const [data, setData] = useState({} as CharacterDTO);
+
+  const [activeCharacter, setActiveCharacter] = useState({} as ICharacter);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -36,6 +40,19 @@ export default function Characters() {
     window.scrollTo({ top: 0 });
   }
 
+  function openModal(id: number) {
+    const character = data.results.find((character) => character.id === id);
+    if (character) {
+      setActiveCharacter(character);
+      setIsModalOpen(true);
+    }
+  }
+
+  function closeModal() {
+    setIsModalOpen(false);
+    setActiveCharacter({} as ICharacter);
+  }
+
   if (!data?.results) {
     return <p>Loading</p>;
   } else {
@@ -46,12 +63,16 @@ export default function Characters() {
             <img src={logo} alt="logo" width="100%" />
           </LogoWrapper>
         </a>
+
         <PageContainer>
-          {data.results.map((character) => (
-            <Character key={character.id} character={character} />
-          ))}
+          <CharactersWrapper>
+            {data.results.map((character) => (
+              <Character key={character.id} character={character} openModal={openModal} />
+            ))}
+          </CharactersWrapper>
+          {isModalOpen && <CharacterModal isOpen={isModalOpen} onClose={closeModal} character={activeCharacter} />}
+          <Pagination pageCount={data.info.pages} onPageChange={onPageChange} />
         </PageContainer>
-        <Pagination pageCount={data.info.pages} onPageChange={onPageChange} />
       </>
     );
   }
