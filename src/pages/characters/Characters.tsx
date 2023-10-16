@@ -4,9 +4,10 @@ import { Character as ICharacter, CharacterDTO } from '@/interfaces/character';
 
 import Character from '@/components/character/Character';
 import Pagination from '@/components/pagination/Pagination';
-import { CharactersWrapper, PageContainer, LogoWrapper } from './Characters.styled';
-import logo from '@/assets/images/logo.png';
 import CharacterModal from '@/components/character/CharacterModal';
+import Text from '@/components/common/Text';
+
+import { CharactersWrapper } from './Characters.styled';
 
 const url = 'https://rickandmortyapi.com/api/character';
 
@@ -58,21 +59,14 @@ export default function Characters() {
   } else {
     return (
       <>
-        <a href="#">
-          <LogoWrapper>
-            <img src={logo} alt="logo" width="100%" />
-          </LogoWrapper>
-        </a>
-
-        <PageContainer>
-          <CharactersWrapper>
-            {data.results.map((character) => (
-              <Character key={character.id} character={character} openModal={openModal} />
-            ))}
-          </CharactersWrapper>
-          {isModalOpen && <CharacterModal isOpen={isModalOpen} onClose={closeModal} character={activeCharacter} />}
-          <Pagination pageCount={data.info.pages} onPageChange={onPageChange} />
-        </PageContainer>
+        <Text tag="h1">Characters</Text>
+        <CharactersWrapper>
+          {data.results.map((character) => (
+            <Character key={character.id} character={character} openModal={openModal} />
+          ))}
+        </CharactersWrapper>
+        {isModalOpen && <CharacterModal isOpen={isModalOpen} onClose={closeModal} character={activeCharacter} />}
+        <Pagination pageCount={data.info.pages} onPageChange={onPageChange} />
       </>
     );
   }

@@ -1,13 +1,5 @@
 import styled from 'styled-components';
 
-export const LogoWrapper = styled.div`
-  width: 100%;
-  max-width: 550px;
-  margin: 10px auto 24px;
-`;
-
-export const PageContainer = styled.div``;
-
 export const CharactersWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
