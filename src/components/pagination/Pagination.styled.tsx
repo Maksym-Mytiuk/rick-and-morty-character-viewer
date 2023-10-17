@@ -6,7 +6,6 @@ export const PaginationWrapper = styled.div`
     display: flex;
     justify-content: center;
     gap: 0 10px;
-    list-style: none;
 
     li {
       width: 36px;

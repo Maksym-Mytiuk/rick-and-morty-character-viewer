@@ -1,42 +1,33 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import useFetch from '@/hooks/useFetch';
 
+import { API_URL } from '@/utils/api';
 import { Character as ICharacter, CharacterDTO } from '@/interfaces/character';
 
 import Character from '@/components/character/Character';
 import Pagination from '@/components/pagination/Pagination';
-import { CharactersWrapper, PageContainer, LogoWrapper } from './Characters.styled';
-import logo from '@/assets/images/logo.png';
 import CharacterModal from '@/components/character/CharacterModal';
+import Text from '@/components/common/Text';
 
-const url = 'https://rickandmortyapi.com/api/character';
+import { CharactersWrapper } from './Characters.styled';
+
+interface CharacterData {
+  loading: boolean;
+  error: boolean;
+  data: CharacterDTO;
+}
 
 export default function Characters() {
-  const [activePageNumber, setActivePageNumber] = useState(1);
-  const [data, setData] = useState({} as CharacterDTO);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activePageNumber = Number(searchParams.get('page')) || 1;
+  const { loading, data } = useFetch(`${API_URL.CHARACTER}/?page=${activePageNumber}`) as unknown as CharacterData;
 
   const [activeCharacter, setActiveCharacter] = useState({} as ICharacter);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    const controller = new AbortController();
-
-    async function doFetch() {
-      const response = await fetch(`${url}/?page=${activePageNumber}`, {
-        signal: controller.signal,
-      });
-      const data: Awaited<CharacterDTO> = await response.json();
-      setData(data);
-    }
-
-    doFetch();
-
-    return () => {
-      controller.abort();
-    };
-  }, [activePageNumber]);
-
   function onPageChange({ selected }: { selected: number }) {
-    setActivePageNumber((prev) => (prev = selected + 1));
+    setSearchParams({ page: (selected + 1).toString() });
     window.scrollTo({ top: 0 });
   }
 
@@ -53,26 +44,23 @@ export default function Characters() {
     setActiveCharacter({} as ICharacter);
   }
 
-  if (!data?.results) {
+  if (loading) {
     return <p>Loading</p>;
   } else {
     return (
       <>
-        <a href="#">
-          <LogoWrapper>
-            <img src={logo} alt="logo" width="100%" />
-          </LogoWrapper>
-        </a>
-
-        <PageContainer>
-          <CharactersWrapper>
-            {data.results.map((character) => (
-              <Character key={character.id} character={character} openModal={openModal} />
-            ))}
-          </CharactersWrapper>
-          {isModalOpen && <CharacterModal isOpen={isModalOpen} onClose={closeModal} character={activeCharacter} />}
-          <Pagination pageCount={data.info.pages} onPageChange={onPageChange} />
-        </PageContainer>
+        <Text tag="h1">Characters</Text>
+        {data?.results && (
+          <>
+            <CharactersWrapper>
+              {data.results.map((character) => (
+                <Character key={character.id} character={character} openModal={openModal} />
+              ))}
+            </CharactersWrapper>
+            {isModalOpen && <CharacterModal isOpen={isModalOpen} onClose={closeModal} character={activeCharacter} />}
+            <Pagination pageCount={data.info.pages} onPageChange={onPageChange} forcePage={activePageNumber - 1} />
+          </>
+        )}
       </>
     );
   }

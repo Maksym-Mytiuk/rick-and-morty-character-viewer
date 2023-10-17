@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const CharactersWrapper = styled.div`
+export const LocationsWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   max-width: 960px;

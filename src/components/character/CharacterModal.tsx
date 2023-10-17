@@ -1,3 +1,4 @@
+import React from 'react';
 import ReactModal from 'react-modal';
 
 import { Character } from '@/interfaces/character';
@@ -51,10 +52,12 @@ export default function CharacterModal({ isOpen, onClose, character }: Props) {
             Episodes:{' '}
             {character.episode.map((item) => {
               const episodeGroup = item.split('/');
+              const episodeName = episodeGroup[episodeGroup.length - 1];
               return (
-                <>
-                  <EpisodeLink href={item}>{episodeGroup[episodeGroup.length - 1]}</EpisodeLink>,&nbsp;
-                </>
+                <React.Fragment key={episodeName}>
+                  <EpisodeLink href={item}>{episodeName}</EpisodeLink>
+                  ,&nbsp;
+                </React.Fragment>
               );
             })}
           </Text>
