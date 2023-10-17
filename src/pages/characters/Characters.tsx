@@ -9,8 +9,10 @@ import Character from '@/components/character/Character';
 import Pagination from '@/components/pagination/Pagination';
 import CharacterModal from '@/components/character/CharacterModal';
 import Text from '@/components/common/Text';
+import SearchInput from '@/components/common/SearchInput/SearchInput';
 
-import { CharactersWrapper } from './Characters.styled';
+import { CharactersWrapper, InputWrapper } from './Characters.styled';
+import Button from '@/components/common/Button/Button';
 
 interface CharacterData {
   loading: boolean;
@@ -25,6 +27,8 @@ export default function Characters() {
 
   const [activeCharacter, setActiveCharacter] = useState({} as ICharacter);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [searchValue, setSearchValue] = useState('');
 
   function onPageChange({ selected }: { selected: number }) {
     setSearchParams({ page: (selected + 1).toString() });
@@ -44,6 +48,10 @@ export default function Characters() {
     setActiveCharacter({} as ICharacter);
   }
 
+  function findByName() {
+    console.log(searchValue);
+  }
+
   if (loading) {
     return <p>Loading</p>;
   } else {
@@ -52,6 +60,11 @@ export default function Characters() {
         <Text tag="h1">Characters</Text>
         {data?.results && (
           <>
+            <InputWrapper>
+              <SearchInput onChange={(value) => setSearchValue(value)} onEnter={findByName} value={searchValue} />
+              <Button onClick={findByName}>Search</Button>
+            </InputWrapper>
+
             <CharactersWrapper>
               {data.results.map((character) => (
                 <Character key={character.id} character={character} openModal={openModal} />
