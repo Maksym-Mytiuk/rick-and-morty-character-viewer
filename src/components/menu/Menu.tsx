@@ -10,10 +10,10 @@ export default function Menu() {
           <NavLink to={ROUTES.CHARACTERS}>Characters</NavLink>
         </li>
         <li>
-          <NavLink to={ROUTES.EPISODES}>Locations</NavLink>
+          <NavLink to={ROUTES.EPISODES}>Episodes</NavLink>
         </li>
         <li>
-          <NavLink to={ROUTES.LOCATIONS}>Episodes</NavLink>
+          <NavLink to={ROUTES.LOCATIONS}>Locations</NavLink>
         </li>
       </NavigationList>
     </nav>

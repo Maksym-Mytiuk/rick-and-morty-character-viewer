@@ -6,7 +6,6 @@ import Locations from '@/pages/locations/Locations';
 
 import Header from '@/components/common/Header/Header';
 import { PageContainer } from './App.styled';
-// import { Header, Logo } from './App.styled';
 
 export const ROUTES = {
   CHARACTERS: '/',

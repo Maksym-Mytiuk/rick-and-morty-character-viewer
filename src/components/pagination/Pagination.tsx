@@ -3,10 +3,11 @@ import { PaginationWrapper } from './Pagination.styled';
 
 type Props = {
   pageCount: number;
+  forcePage: number;
   onPageChange: ({ selected }: { selected: number }) => void;
 };
 
-export default function Pagination({ pageCount, onPageChange }: Props) {
+export default function Pagination({ pageCount, forcePage, onPageChange }: Props) {
   return (
     <PaginationWrapper>
       <ReactPaginate
@@ -18,6 +19,7 @@ export default function Pagination({ pageCount, onPageChange }: Props) {
         pageCount={pageCount}
         previousLabel="<"
         renderOnZeroPageCount={null}
+        forcePage={forcePage}
       />
     </PaginationWrapper>
   );
