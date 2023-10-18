@@ -8,7 +8,7 @@ export const CharactersWrapper = styled.div`
   gap: 20px;
 `;
 
-export const InputWrapper = styled.div`
+export const SearchWrapper = styled.div`
   max-width: 960px;
   margin: 0 auto 24px;
   display: flex;

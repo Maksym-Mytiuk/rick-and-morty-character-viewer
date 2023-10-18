@@ -1,27 +1,36 @@
-# React + TypeScript + Vite
+# Rick and Morty Character Viewer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+This web application allows users to browse and view characters from the Rick and Morty series.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Running Locally
 
-## Expanding the ESLint configuration
+To run the application locally:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. Clone the repository: `git clone git@github.com:Maksym-Mytiuk/rick-and-morty-character-viewer.git`
+2. Navigate to the project directory: `cd rick-and-morty-character-viewer`
+3. Install dependencies: `npm install`
+4. Start the development server: `npm start`
+5. Open a browser and navigate to `http://localhost:5173/`
 
-- Configure the top-level `parserOptions` property like this:
+## How to Use
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+1. **Browsing Characters**: Navigate to the main page to view a list of characters. You can scroll through them or use the pagination controls to jump between pages.
+2. **Viewing Character Details**: Click on a character to view more detailed information about them.
+3. **Searching for Characters**: Use the search bar at the top to search for characters by name or other attributes. The displayed list will update based on your search input.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Live Demo
+
+https://maksym-mytiuk.github.io/
+
+## Screenshots
+
+![plot](./screenshot1.jpg)
+![plot](./screenshot2.jpg)
+![plot](./screenshot3.jpg)
+![plot](./screenshot4.jpg)
+
+## Authors
+
+Maksym Mytiuk [github](https://github.com/Maksym-Mytiuk), [linkedin](https://www.linkedin.com/in/maksym-mytiuk/)

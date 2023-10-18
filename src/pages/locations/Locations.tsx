@@ -4,8 +4,8 @@ import useFetch from '@/hooks/useFetch';
 import { API_URL } from '@/utils/api';
 import { LocationDTO } from '@/interfaces/location';
 
-import Location from '@/components/location/Location';
-import Pagination from '@/components/pagination/Pagination';
+import Location from '@/components/Location';
+import Pagination from '@/components/Pagination';
 import Text from '@/components/common/Text';
 
 import { LocationsWrapper } from './Locations.styled';

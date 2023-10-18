@@ -33,6 +33,6 @@ export const CharacterDetails = styled.div`
   }
 `;
 
-export const EpisodeLink = styled.a`
+export const EpisodeItem = styled.span`
   display: inline-block;
 `;
