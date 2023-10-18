@@ -4,7 +4,7 @@ import ReactModal from 'react-modal';
 import { Character } from '@/interfaces/character';
 
 import Text from '@/components/common/Text';
-import { CloseButton, ModalWrapper, CharacterDetails, EpisodeLink } from './CharacterModal.styled';
+import { CloseButton, ModalWrapper, CharacterDetails, EpisodeItem } from './CharacterModal.styled';
 
 type Props = {
   isOpen: boolean;
@@ -28,6 +28,7 @@ export default function CharacterModal({ isOpen, onClose, character }: Props) {
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
+          overflow: 'hidden',
         },
       }}
     >
@@ -42,12 +43,8 @@ export default function CharacterModal({ isOpen, onClose, character }: Props) {
           <Text>Status: {character.status}</Text>
           <Text>Species: {character.species}</Text>
           <Text>Gender: {character.gender}</Text>
-          <Text>
-            Origin: <a href={character.origin.url}>{character.origin.name}</a>
-          </Text>
-          <Text>
-            Location: <a href={character.location.url}>{character.location.name}</a>
-          </Text>
+          <Text>Origin: {character.origin.name}</Text>
+          <Text>Location: {character.location.name}</Text>
           <Text>
             Episodes:{' '}
             {character.episode.map((item) => {
@@ -55,8 +52,7 @@ export default function CharacterModal({ isOpen, onClose, character }: Props) {
               const episodeName = episodeGroup[episodeGroup.length - 1];
               return (
                 <React.Fragment key={episodeName}>
-                  <EpisodeLink href={item}>{episodeName}</EpisodeLink>
-                  ,&nbsp;
+                  <EpisodeItem>{episodeName},&nbsp;</EpisodeItem>
                 </React.Fragment>
               );
             })}

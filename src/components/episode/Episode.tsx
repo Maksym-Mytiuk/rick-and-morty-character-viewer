@@ -1,7 +1,7 @@
 import { Episode as IEpisode } from '@/interfaces/episode';
 
 import Text from '@/components/common/Text';
-import Card from '@/components/common/Card/Card';
+import Card from '@/components/common/Card';
 
 type Props = {
   episode: IEpisode;

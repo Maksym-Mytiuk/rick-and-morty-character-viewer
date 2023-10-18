@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom';
 import { Logo, Header as AppHeader } from './Header.styled';
-import Menu from '@/components/menu/Menu';
+
+import Menu from '@/components/Menu';
 import logo from '@/assets/images/logo.png';
 
 export default function Header() {
   return (
     <AppHeader>
-      <Link to={'#'}>
+      <Link to={'/'}>
         <Logo src={logo} alt="logo" />
       </Link>
 

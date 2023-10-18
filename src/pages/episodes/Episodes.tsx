@@ -4,8 +4,8 @@ import useFetch from '@/hooks/useFetch';
 import { API_URL } from '@/utils/api';
 import { EpisodeDTO } from '@/interfaces/episode';
 
-import Episode from '@/components/episode/Episode';
-import Pagination from '@/components/pagination/Pagination';
+import Episode from '@/components/Episode';
+import Pagination from '@/components/Pagination';
 import Text from '@/components/common/Text';
 
 import { EpisodesWrapper } from './Episodes.styled';

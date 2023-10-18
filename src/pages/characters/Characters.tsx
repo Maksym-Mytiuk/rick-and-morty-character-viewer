@@ -5,14 +5,13 @@ import useFetch from '@/hooks/useFetch';
 import { API_URL } from '@/utils/api';
 import { CharacterDTO } from '@/interfaces/character';
 
-import Character from '@/components/character/Character';
-import Pagination from '@/components/pagination/Pagination';
-import CharacterModal from '@/components/character/CharacterModal';
+import Character, { CharacterModal } from '@/components/Character';
+import Pagination from '@/components/Pagination';
 import Text from '@/components/common/Text';
-import SearchInput from '@/components/common/SearchInput/SearchInput';
-import Button from '@/components/common/Button/Button';
+import SearchInput from '@/components/common/SearchInput';
+import Button from '@/components/common/Button';
 
-import { CharactersWrapper, InputWrapper } from './Characters.styled';
+import { CharactersWrapper, SearchWrapper } from './Characters.styled';
 
 interface CharacterData {
   loading: boolean;
@@ -50,8 +49,8 @@ export default function Characters() {
   }
 
   function closeModal() {
-    setIsModalOpen(false);
     setActiveCharacterId(0);
+    setIsModalOpen(false);
   }
 
   const selectedCharacter = data?.results?.find((character) => character.id === activeCharacterId);
@@ -62,20 +61,22 @@ export default function Characters() {
     return (
       <>
         <Text tag="h1">Characters</Text>
+
+        <SearchWrapper>
+          <SearchInput onChange={(value) => setSearchValue(value)} onEnter={findByName} value={searchValue} />
+          <Button onClick={findByName}>Search</Button>
+        </SearchWrapper>
+
         {data?.results && (
           <>
-            <InputWrapper>
-              <SearchInput onChange={(value) => setSearchValue(value)} onEnter={findByName} value={searchValue} />
-              <Button onClick={findByName}>Search</Button>
-            </InputWrapper>
-
             <CharactersWrapper>
               {data.results.map((character) => (
                 <Character key={character.id} character={character} openModal={openModal} />
               ))}
             </CharactersWrapper>
-            {isModalOpen && selectedCharacter && <CharacterModal isOpen={isModalOpen} onClose={closeModal} character={selectedCharacter} />}
             <Pagination pageCount={data.info.pages} onPageChange={onPageChange} forcePage={paramPage - 1} />
+
+            {isModalOpen && selectedCharacter && <CharacterModal isOpen={isModalOpen} onClose={closeModal} character={selectedCharacter} />}
           </>
         )}
       </>
