@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import useFetch from '@/hooks/useFetch';
 
-import { API_URL } from '@/utils/api';
+import { API_URL } from '@/constants/api';
 import { CharacterDTO } from '@/interfaces/character';
 
 import Character, { CharacterModal } from '@/components/Character';
@@ -13,12 +13,6 @@ import Button from '@/components/common/Button';
 
 import { CharactersWrapper, SearchWrapper } from './Characters.styled';
 
-interface CharacterData {
-  loading: boolean;
-  error: boolean;
-  data: CharacterDTO;
-}
-
 export default function Characters() {
   const [searchParams, setSearchParams] = useSearchParams();
   const paramPage = Number(searchParams.get('page')) || 1;
@@ -28,7 +22,7 @@ export default function Characters() {
   const [activeCharacterId, setActiveCharacterId] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { loading, data } = useFetch(`${API_URL.CHARACTER}/?page=${paramPage}&name=${paramName}`) as unknown as CharacterData;
+  const { loading, data } = useFetch<CharacterDTO>(`${API_URL.CHARACTER}/?page=${paramPage}&name=${paramName}`);
 
   function onPageChange({ selected }: { selected: number }) {
     updateSearchParams({ page: `${selected + 1}` });
