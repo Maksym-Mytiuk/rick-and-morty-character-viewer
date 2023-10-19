@@ -1,7 +1,7 @@
 import { useSearchParams } from 'react-router-dom';
 import useFetch from '@/hooks/useFetch';
 
-import { API_URL } from '@/utils/api';
+import { API_URL } from '@/constants/api';
 import { EpisodeDTO } from '@/interfaces/episode';
 
 import Episode from '@/components/Episode';
@@ -10,16 +10,10 @@ import Text from '@/components/common/Text';
 
 import { EpisodesWrapper } from './Episodes.styled';
 
-interface EpisodeData {
-  loading: boolean;
-  error: boolean;
-  data: EpisodeDTO;
-}
-
 export default function Episodes() {
   const [searchParams, setSearchParams] = useSearchParams();
   const activePageNumber = Number(searchParams.get('page')) || 1;
-  const { loading, data } = useFetch(`${API_URL.EPISODE}/?page=${activePageNumber}`) as unknown as EpisodeData;
+  const { loading, data } = useFetch<EpisodeDTO>(`${API_URL.EPISODE}/?page=${activePageNumber}`);
 
   function onPageChange({ selected }: { selected: number }) {
     setSearchParams({ page: (selected + 1).toString() });

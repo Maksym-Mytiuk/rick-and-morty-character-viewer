@@ -1,13 +1,19 @@
 import { useEffect, useState } from 'react';
 
+type FetchResult<T> = {
+  loading: boolean;
+  error: Error | null;
+  data: T | null;
+};
+
 const defaultOptions = {
   headers: { 'Content-type': 'application/json' },
 };
 
-export default function useFetch(url: string, options?: RequestInit) {
+export default function useFetch<T>(url: string, options?: RequestInit): FetchResult<T> {
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-  const [data, setData] = useState(undefined);
+  const [error, setError] = useState<Error | null>(null);
+  const [data, setData] = useState<T | null>(null);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -16,10 +22,15 @@ export default function useFetch(url: string, options?: RequestInit) {
       try {
         setLoading(true);
         const response = await fetch(url, { ...defaultOptions, ...options, signal: controller.signal });
-        const data = await response.json();
-        setData(data);
-      } catch (error) {
-        setError(true);
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const jsonData: T = await response.json();
+        setData(jsonData);
+      } catch (err) {
+        setError(err instanceof Error ? err : new Error('Unknown error occurred during fetch'));
       } finally {
         setLoading(false);
       }
@@ -30,7 +41,7 @@ export default function useFetch(url: string, options?: RequestInit) {
     return () => {
       controller.abort();
     };
-  }, [url]);
+  }, [url, options]);
 
   return { loading, error, data };
 }

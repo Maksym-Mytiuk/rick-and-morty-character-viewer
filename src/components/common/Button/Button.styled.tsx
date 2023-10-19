@@ -3,11 +3,9 @@ import styled from 'styled-components';
 export const Button = styled.button`
   width: 140px;
   height: 45px;
-  font-family: 'Roboto', sans-serif;
-  font-size: 11px;
+  font-size: 13px;
   text-transform: uppercase;
-  letter-spacing: 2.5px;
-  font-weight: 500;
+  letter-spacing: 2px;
   color: #06b0c9;
   background-color: #fff;
   border: 1px solid #06b0c9;

@@ -1,7 +1,7 @@
 import { useSearchParams } from 'react-router-dom';
 import useFetch from '@/hooks/useFetch';
 
-import { API_URL } from '@/utils/api';
+import { API_URL } from '@/constants/api';
 import { LocationDTO } from '@/interfaces/location';
 
 import Location from '@/components/Location';
@@ -10,16 +10,10 @@ import Text from '@/components/common/Text';
 
 import { LocationsWrapper } from './Locations.styled';
 
-interface LocationData {
-  loading: boolean;
-  error: boolean;
-  data: LocationDTO;
-}
-
 export default function Locations() {
   const [searchParams, setSearchParams] = useSearchParams();
   const activePageNumber = Number(searchParams.get('page')) || 1;
-  const { loading, data } = useFetch(`${API_URL.LOCATION}/?page=${activePageNumber}`) as unknown as LocationData;
+  const { loading, data } = useFetch<LocationDTO>(`${API_URL.LOCATION}/?page=${activePageNumber}`);
 
   function onPageChange({ selected }: { selected: number }) {
     setSearchParams({ page: (selected + 1).toString() });
