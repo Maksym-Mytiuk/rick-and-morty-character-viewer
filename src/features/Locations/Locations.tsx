@@ -1,27 +1,27 @@
 import { useSearchParams } from 'react-router-dom';
-import useFetch from '@/hooks/useFetch';
 
-import { API_URL } from '@/constants/api';
+import { useFetchLocationsQuery } from '../RickAndMorty/rickAndMortyApiSlice';
+
 import { LocationDTO } from '@/interfaces/location';
 
 import Location from '@/components/Location';
 import Pagination from '@/components/Pagination';
 import Text from '@/components/common/Text';
-
 import { LocationsWrapper } from './Locations.styled';
 
 export default function Locations() {
   const [searchParams, setSearchParams] = useSearchParams();
   const activePageNumber = Number(searchParams.get('page')) || 1;
-  const { loading, data } = useFetch<LocationDTO>(`${API_URL.LOCATION}/?page=${activePageNumber}`);
+
+  const { data = {} as LocationDTO, isFetching } = useFetchLocationsQuery({ activePageNumber });
 
   function onPageChange({ selected }: { selected: number }) {
     setSearchParams({ page: (selected + 1).toString() });
     window.scrollTo({ top: 0 });
   }
 
-  if (loading) {
-    return <p>Loading</p>;
+  if (isFetching) {
+    return <p>isFetching</p>;
   } else {
     return (
       <>

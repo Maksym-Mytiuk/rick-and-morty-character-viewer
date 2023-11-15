@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import useFetch from '@/hooks/useFetch';
 
-import { API_URL } from '@/constants/api';
+import { useFetchCharactersQuery } from '../RickAndMorty/rickAndMortyApiSlice';
+
 import { CharacterDTO } from '@/interfaces/character';
 
 import Character, { CharacterModal } from '@/components/Character';
@@ -10,19 +10,18 @@ import Pagination from '@/components/Pagination';
 import Text from '@/components/common/Text';
 import SearchInput from '@/components/common/SearchInput';
 import Button from '@/components/common/Button';
-
 import { CharactersWrapper, SearchWrapper } from './Characters.styled';
 
 export default function Characters() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const paramPage = Number(searchParams.get('page')) || 1;
-  const paramName = searchParams.get('name') || '';
+  const activePageNumber = Number(searchParams.get('page')) || 1;
+  const searchName = searchParams.get('name') || '';
 
-  const [searchValue, setSearchValue] = useState(paramName);
+  const [searchValue, setSearchValue] = useState(searchName);
   const [activeCharacterId, setActiveCharacterId] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { loading, data } = useFetch<CharacterDTO>(`${API_URL.CHARACTER}/?page=${paramPage}&name=${paramName}`);
+  const { data = {} as CharacterDTO, isFetching } = useFetchCharactersQuery({ activePageNumber, searchName });
 
   function onPageChange({ selected }: { selected: number }) {
     updateSearchParams({ page: `${selected + 1}` });
@@ -49,7 +48,7 @@ export default function Characters() {
 
   const selectedCharacter = data?.results?.find((character) => character.id === activeCharacterId);
 
-  if (loading) {
+  if (isFetching) {
     return <p>Loading</p>;
   } else {
     return (
@@ -68,7 +67,7 @@ export default function Characters() {
                 <Character key={character.id} character={character} openModal={openModal} />
               ))}
             </CharactersWrapper>
-            <Pagination pageCount={data.info.pages} onPageChange={onPageChange} forcePage={paramPage - 1} />
+            <Pagination pageCount={data.info.pages} onPageChange={onPageChange} forcePage={activePageNumber - 1} />
 
             {isModalOpen && selectedCharacter && <CharacterModal isOpen={isModalOpen} onClose={closeModal} character={selectedCharacter} />}
           </>

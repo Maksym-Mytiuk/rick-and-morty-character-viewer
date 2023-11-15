@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import Characters from '@/pages/Characters/Characters';
-import Episodes from '@/pages/Episodes/Episodes';
-import Locations from '@/pages/Locations/Locations';
+import Characters from '@/features/Characters/Characters';
+import Episodes from '@/features/Episodes/Episodes';
+import Locations from '@/features/Locations/Locations';
 
 import Header from '@/components/common/Header/Header';
 import { PageContainer } from './App.styled';
