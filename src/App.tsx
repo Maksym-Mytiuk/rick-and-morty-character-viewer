@@ -8,7 +8,7 @@ import Header from '@/components/common/Header/Header';
 import { PageContainer } from './App.styled';
 
 export const ROUTES = {
-  CHARACTERS: '/',
+  CHARACTERS: '/1',
   EPISODES: '/episodes',
   LOCATIONS: '/locations',
 };
